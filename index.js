@@ -1,10 +1,10 @@
-let characters = [];
+//let characters = [];
 
 function fetchCharacters() {
     fetch('http://localhost:3000/characters')
         .then(response => response.json())
         .then(data => {
-            characters = data;
+           let characters = data;
             displayCharacters(characters);
         })
         .catch(error => console.error('Error:', error));
@@ -17,7 +17,7 @@ function displayCharacters(characters) {
 
     characters.forEach(character => {
         const listItem = document.createElement('li');
-        listItem.textContent = character.animal;
+        listItem.textContent = character.name;
         listItem.style.cursor = 'pointer';
         listItem.onclick = () => showCharacterDetails(character);
         list.appendChild(listItem);
@@ -30,21 +30,22 @@ function showCharacterDetails(character) {
     detailsContainer.innerHTML = '';
 
     const animal = document.createElement('h2');
-    animal.textContent = character.animal;
+    animal.textContent = character.name;
 
     const image = document.createElement('img');
     image.src = character.Image; 
-    image.alt = character.animal; 
-    image.style.width = '150px'; 
+    image.alt = character.name; 
+    image.style.width = '30px'; 
 
     const votes = document.createElement('p');
     votes.textContent = `votes: ${character.votes}`; 
+    votes.id ="vote-count";
 
     const voteButton = document.createElement('button');
     voteButton.textContent = 'Vote';
     voteButton.onclick = () => {
         character.votes++;
-        document.getElementById('vote-count').textContent = `votes: ${character.votes}`;
+        document.getElementById('vote-count').innerHTML = `votes: ${character.votes}`;
     };
 
     const resetButton = document.createElement('button');
